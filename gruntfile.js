@@ -4,6 +4,7 @@ module.exports = grunt => {
 
 	require('load-grunt-tasks')(grunt);
 
+	var hostname = grunt.option('hostname') || 'localhost';
 	let port = grunt.option('port') || 8000;
 	let root = grunt.option('root') || '.';
 
@@ -103,6 +104,7 @@ module.exports = grunt => {
 		connect: {
 			server: {
 				options: {
+					hostname: hostname,
 					port: port,
 					base: root,
 					livereload: true,
