@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CSS Specificity</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>CSS Specificity</h1>
+					<h5>How does the browser define the priority of selectors?</h5>
+				</section>
+
+				<section>
+					<h2>Selectors List</h2>
+					<ul>
+						<li>(*) Universal selector;</li>
+						<li class="fragment">(div) element selector;</li>
+						<li class="fragment">(.myClass) class selector;</li>
+						<li class="fragment">(#myDiv) ID selector;</li>
+						<li class="fragment">(style="color: red") inline style;</li>
+						<li class="fragment">(!important) !important.</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>(*) Universal selector</h2>
+						<p>
+							The * selector selects all elements.
+						</p>
+					</section>
+
+					<section>
+						<h4>(*) Universal selector</h2>
+						<pre><code class="css" data-trim data-line-numbers="1-3">
+							* {
+						    background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							The * selector selects all elements.
+						</p>
+					</section>
+
+					<section>
+						<h4>(*) Universal selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-3">
+							div * {
+						    background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							Select all elements inside &lt;div&gt; elements
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>(div) Element selector</h2>
+						<p>
+							The element selector selects all elements with the specified element name.
+						</p>
+					</section>
+
+					<section>
+						<h4>(div) Element selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							div {
+						    background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							Select and style all &lt;div&gt; elements
+						</p>
+					</section>
+
+					<section>
+						<h4>(div, p) Element selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							div, p {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							Select and style all &lt;div&gt; and &lt;p&gt; elements
+						</p>
+					</section>
+
+					<section>
+						<h4>(div p) Element selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							div p {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							Selects all &lt;p&gt; elements inside &lt;div&gt; elements
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>(.myClass) Class selector</h2>
+						<p>
+							The class selector selects elements with a specific class attribute.
+						</p>
+					</section>
+	
+					<section>
+						<h4>(.myClass) Class selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							.myClass {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p>
+							Select and style all elements with class="myClass"<br>
+						</p>
+						<pre><code class="html" data-trim data-line-numbers="1-3">
+							&lt;div class="myClass"&gt; My yellow background &lt;/div&gt;
+							&lt;p class="myClass"&gt; My yellow background &lt;/p&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>(p.myClass) Class selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							p.myClass {
+							  color: white;
+							}
+						</code></pre>
+						<p>
+							Style all &lt;p&gt; elements with class="myClass"
+						</p>
+						<pre><code class="html" data-trim data-line-numbers="1-3">
+							&lt;p class="myClass"&gt; My white text &lt;/p&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>(.myClass, .myClass2) Class selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							.myClass, .myClass2 {
+							  color: white;
+							}
+						</code></pre>
+						<p>
+							Selects all elements with class="myClass2" that is a descendant of an element with class="myClass"
+						</p>
+						<pre><code class="html" data-trim data-line-numbers="1-3">
+							&lt;div class="myClass"&gt;
+							  &lt;p class="myClass2"&gt; My white text &lt;/p&gt;
+							&lt;/div&gt;
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>(#myId) ID selector</h2>
+						<p>
+							The id selector styles the element with the specified id
+						</p>
+					</section>
+	
+					<section>
+						<h4>(#myId) Class selector</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-3">
+							#myId {
+							  color: yellow;
+							}
+						</code></pre>
+						<p>
+							Style the element with id="myId"
+						</p>
+						<pre><code class="html" data-trim data-line-numbers="1-3">
+							&lt;p id="myId"&gt; My yellow text &lt;/p&gt;
+						</code></pre>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>inline style</h2>
+						<p>
+							The HTML Style Attribute
+						</p>
+					</section>
+	
+					<section>
+						<h4>(style="color: red") inline style</h4>
+						<pre><code class="html" data-trim data-line-numbers="1-3">
+							&lt;p style="color: red"&gt; My red text &lt;/p&gt;
+						</code></pre>
+					</section>
+				</section>
+
+
+				
+				<section>
+					<section>
+						<h2>!important</h2>
+						<p>
+							When an important rule is used on a style declaration, this declaration overrides any other declarations.
+						</p>
+					</section>
+
+					<section>
+						<h4>!important</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-6">
+							.myClass {
+							  background-color: yellow !important;
+							}
+	
+							.myClass {
+							  background-color: red;
+							}
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>!important</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-3">
+							.myClass {
+							  background-color: yellow !important;
+							}
+	
+							.myClass {
+							  background-color: red;
+							}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<h2>Selectors List</h2>
+					<ul>
+						<li>(*) Universal selector;</li>
+						<li class="fragment">(div) element selector;</li>
+						<li class="fragment">(.myClass) class selector;</li>
+						<li class="fragment">(#myDiv) ID selector;</li>
+						<li class="fragment">(style="color: red") inline style;</li>
+						<li class="fragment">(!important) !important.</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is Specificity?</h2>
+						<p class="fragment">
+							If there are two or more conflicting CSS rules that point to the same element, the browser follows some rules to determine which one is most specific and therefore wins out.
+						</p>
+					</section>
+
+					<section>
+						<h2>CSS Specificity</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Selector</th>
+									<th>Value</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>*</td>
+									<td>0 - 0 - 0 - 0</td>
+									<td>Universal selector</td>
+								</tr>
+								<tr>
+									<td>div</td>
+									<td>0 - 0 - 0 - 1</td>
+									<td>1 element</td>
+								</tr>
+								<tr>
+									<td>.myClass</td>
+									<td>0 - 0 - 1 - 0</td>
+									<td>1 class</td>
+								</tr>
+								<tr>
+									<td>#myId</td>
+									<td>0 - 1 - 0 - 0</td>
+									<td>1 attribute id</td>
+								</tr>
+								<tr>
+									<td>inline style</td>
+									<td>1 - 0 - 0 - 0</td>
+									<td>attribute HTML style</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h4>CSS Specificity</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							div div p {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p class="fragment">Selector Specificity: (0, 0, 3)</p>
+					</section>
+
+					<section>
+						<h4>CSS Specificity</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							.myClass div p {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p class="fragment">Selector Specificity: (0, 1, 2)</p>
+					</section>
+
+					<section>
+						<h4>CSS Specificity</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							#myId div p {
+							  background-color: yellow;
+							}
+						</code></pre>
+						<p class="fragment">Selector Specificity: (1, 0, 2)</p>
+					</section>
+
+					<section>
+						<h4>CSS Specificity</h4>
+						<pre><code class="css" data-trim data-line-numbers="1-7">
+							.myClass {
+							  color: yellow;
+							}
+							.myClass {
+							  color: red;
+							}
+						</code></pre>
+						<pre class="fragment"><code class="html" data-trim data-line-numbers="1-3">
+						  &lt;p class="myClass"&gt; My red text &lt;/p&gt;
+						</code></pre>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
